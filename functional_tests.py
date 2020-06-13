@@ -10,6 +10,10 @@ class NewVisitorTest(unittest.TestCase):
 
     def tearDown(self):
         self.browser.quit()
+        
+    def test_can_access_page(self):
+        self.browser.get('http://localhost:8000')
+        self.assertIn('CV', self.browser.title)
 
 #    def check_for_row_in_list_table(self, row_text):
 #       table = self.browser.find_element_by_id('id_list_table')
