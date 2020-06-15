@@ -18,6 +18,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_edit_buttons(self):
         self.browser.get('http://localhost:8000')
         time.sleep(1)
+        
         edit_about_button = self.browser.find_element_by_name("edit_about")
         self.assertEqual(False, edit_about_button is None)
         

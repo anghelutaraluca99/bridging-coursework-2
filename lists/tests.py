@@ -6,6 +6,49 @@ class HomePageTest(TestCase):
     def test_uses_home_template(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
+
+
+class AboutPageTest(TestCase):
+
+    def test_uses_edit_about_template(self):
+        response = self.client.get('/edit_about')
+        self.assertTemplateUsed(response, 'edit_about.html')
+
+
+class ExperiencePageTest(TestCase):
+
+    def test_uses_edit_experience_template(self):
+        response = self.client.get('/edit_experience')
+        self.assertTemplateUsed(response, 'edit_experience.html')
+        
+class EducationPageTest(TestCase):
+
+    def test_uses_edit_education_template(self):
+        response = self.client.get('/edit_education')
+        self.assertTemplateUsed(response, 'edit_education.html')
+    
+    
+class SkillsPageTest(TestCase):
+
+    def test_uses_edit_skills_template(self):
+        response = self.client.get('/edit_skills')
+        self.assertTemplateUsed(response, 'edit_skills.html')
+    
+    
+class InterestsPageTest(TestCase):
+
+    def test_uses_edit_experience_template(self):
+        response = self.client.get('/edit_interests')
+        self.assertTemplateUsed(response, 'edit_interests.html')
+    
+    
+class AwardsPageTest(TestCase):
+
+    def test_uses_edit_experience_template(self):
+        response = self.client.get('/edit_awards')
+        self.assertTemplateUsed(response, 'edit_awards.html')
+
+
     
 #    def test_can_save_a_POST_request(self):
 #        self.client.post('/', data={'item_text': 'A new list item'})
