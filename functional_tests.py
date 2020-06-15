@@ -15,6 +15,28 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
         self.assertIn('CV', self.browser.title)
 
+    def test_edit_buttons(self):
+        self.browser.get('http://localhost:8000')
+        time.sleep(1)
+        edit_about_button = self.browser.find_element_by_name("edit_about")
+        self.assertEqual(False, edit_about_button is None)
+        
+        edit_experience_button = self.browser.find_element_by_name("edit_experience")
+        self.assertEqual(False, edit_experience_button is None)
+        
+        edit_education_button = self.browser.find_element_by_name("edit_education")
+        self.assertEqual(False, edit_education_button is None)
+        
+        edit_skills_button = self.browser.find_element_by_name("edit_skills")
+        self.assertEqual(False, edit_skills_button is None)
+        
+        edit_interests_button = self.browser.find_element_by_name("edit_interests")
+        self.assertEqual(False, edit_interests_button is None)
+        
+        edit_awards_button = self.browser.find_element_by_name("edit_awards")
+        self.assertEqual(False, edit_awards_button is None)
+        
+
 #    def check_for_row_in_list_table(self, row_text):
 #       table = self.browser.find_element_by_id('id_list_table')
 #       rows = table.find_elements_by_tag_name('tr')
