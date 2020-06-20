@@ -19,8 +19,8 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
         time.sleep(1)
         
-        edit_about_button = self.browser.find_element_by_name("edit_about")
-        self.assertEqual(False, edit_about_button is None)
+#        edit_about_button = self.browser.find_element_by_name("edit_about")
+#        self.assertEqual(False, edit_about_button is None)
         
         edit_experience_button = self.browser.find_element_by_name("edit_experience")
         self.assertEqual(False, edit_experience_button is None)
@@ -38,6 +38,37 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEqual(False, edit_awards_button is None)
         
 
+    def test_edit_submit_buttons(self):
+        self.browser.get('http://localhost:8000')
+        time.sleep(1)
+        
+        edit_about_button=self.browser.find_element_by_id("edit_about")
+        submit_about_button = self.browser.find_element_by_id("submit_about")
+        editable_about_div = self.browser.find_element_by_id("editable_about")
+        uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
+        
+        self.assertEqual(editable_about_div.value_of_css_property('display'), "none")
+        self.assertEqual(uneditable_about_div.value_of_css_property('display'), "block")
+        
+        edit_about_button.click();
+        time.sleep(1)
+        
+        editable_about_div = self.browser.find_element_by_id("editable_about")
+        uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
+        
+        self.assertEqual(editable_about_div.value_of_css_property('display'), "block")
+        self.assertEqual(uneditable_about_div.value_of_css_property('display'), "none")
+        
+        submit_about_button.click();
+        time.sleep(1)
+        
+        editable_about_div = self.browser.find_element_by_id("editable_about")
+        uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
+        
+        self.assertEqual(editable_about_div.value_of_css_property('display'), "none")
+        self.assertEqual(uneditable_about_div.value_of_css_property('display'), "block")
+        
+        
 #    def check_for_row_in_list_table(self, row_text):
 #       table = self.browser.find_element_by_id('id_list_table')
 #       rows = table.find_elements_by_tag_name('tr')

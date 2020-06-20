@@ -8,6 +8,7 @@ def home_page(request):
     })
     
 def edit_about(request):
+    request.META.pop('HTTP_IF_MODIFIED_SINCE', None)
     return render(request, 'edit_about.html')
     
 def edit_experience(request):
