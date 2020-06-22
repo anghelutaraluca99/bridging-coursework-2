@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from lists.models import Item
+from lists.models import CV
 
 def home_page(request):
     return render(request, 'home.html', {
-        'new_item_text': request.POST.get('item_text', ''),
+        'new_item_text': request.POST.get('cv', ''),
     })
     
 def edit_about(request):
@@ -28,8 +28,41 @@ def edit_awards(request):
 
 def home_page(request):
     if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'])
+        name_surname = request.POST.get('name_surname_input', "")
+        address = request.POST.get('address_input', "")
+        email = request.POST.get('email_input', "")
+        about_description = request.POST.get('about_description_input', "")
+        
+        cv = CV.objects.all()
+        print(len(cv))
+        
+        if len(cv) == 0:
+            cv = CV(name_surname = name_surname, address = address, email = email, about_description = about_description)
+            cv.save()
+        else :
+            cv[0].name_surname = name_surname
+            cv[0].address = address
+            cv[0].email = email
+            cv[0].about_description = about_description
+            cv[0].save()
         return redirect('/')
-
-    items = Item.objects.all()
-    return render(request, 'home.html', {'items': items})
+    else:
+        if len(CV.objects.all()) > 0:
+            cv = CV.objects.all()[0]
+            name_surname = cv.name_surname
+            address = cv.address
+            email = cv.email
+            about_description = cv.about_description
+            print(name_surname)
+        else:
+            name_surname = 'NAME SURNAME'
+            address = 'ADDRESS'
+            email = 'email@email.com'
+            about_description = 'Short Description'
+        
+    return render(request, 'home.html', {
+        'name_surname': name_surname,
+        'address': address,
+        'email': email,
+        'about_description': about_description,
+    })

@@ -38,21 +38,28 @@
             <!-- About-->
             <section class="resume-section" id="about">
                 <div style="display:none" class="resume-section-content" id="editable_about">
-<!--                    <form method="POST">-->
-                        <form>
-                        <h1 class="mb-0" contentEditable="true" >Clarence Taylor</h1>
-                        <div class="subheading mb-5" contentEditable="true" >3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 · <a href="mailto:name@email.com">name@email.com</a></div>
-                        <p class="lead mb-5" contentEditable="true" >I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+                    <form method="POST">
+<!--                        <form>-->
+                        <h1 class="mb-0" contentEditable="true" name="name_surname" id="name_surname">Name Surname</h1>
+                        <div class="subheading mb-5" contentEditable="true"  name="address" id="address">Address</div>
+                        <a name="email" id="email" contentEditable="true" href="mailto:name@email.com">email@email.com</a>
+                        <p class="lead mb-5" contentEditable="true" name="about_description" id="about_description">Short Description</p>
                         <div class="social-icons">
                             <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a><a class="social-icon" href="#"><i class="fab fa-github"></i></a><a class="social-icon" href="#"><i class="fab fa-twitter"></i></a><a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                         </div>
-                        <button onclick="showStuff('uneditable_about');hideStuff('editable_about')" id="submit_about">Submit</button>
+                        {% csrf_token %}
+                        <input type="text" name="name_surname_input" id="name_surname_input" hidden></input>
+                        <input type="text" name="address_input" id="address_input" hidden></input>
+                        <input type="text" name="email_input" id="email_input" hidden></input>
+                        <input type="text" name="about_description_input" id="about_description_input" hidden></input>
+                        <input type="submit" value="Submit" onclick="showStuff('uneditable_about');hideStuff('editable_about');addInput('name_surname', 'name_surname_input');addInput('address', 'address_input');addInput('about_description', 'about_description_input');addInput('email', 'email_input')" id="submit_about"></input>
                     </form>
                 </div>
                 <div class="resume-section-content" id="uneditable_about">
-                    <h1 class="mb-0">Clarence Taylor</h1>
-                    <div class="subheading mb-5">3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 · <a href="mailto:name@email.com">name@email.com</a></div>
-                    <p class="lead mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+                    <h1 class="mb-0" id="uneditable_name_surname">{{ name_surname }}</h1>
+                    <div class="subheading mb-5" id="uneditable_address">{{ address }}</div>
+                    <a href="mailto:name@email.com" id="uneditable_email">{{ email }}</a>
+                    <p class="lead mb-5" id="uneditable_about_description">{{ about_description }}</p>
                     <div class="social-icons">
                         <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a><a class="social-icon" href="#"><i class="fab fa-github"></i></a><a class="social-icon" href="#"><i class="fab fa-twitter"></i></a><a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                     </div>
@@ -220,7 +227,12 @@
             function showStuff(id) {
                 document.getElementById(id).style.display = "block";
                 console.log("show")
-                }
+            }
+            function addInput(id_to_be_copied_from, id_to_be_pasted_to) {
+                var input = document.getElementById(id_to_be_pasted_to)
+                var element = document.getElementById(id_to_be_copied_from)
+                input.value = element.textContent
+            }
         </script>
     </body>
 </html>

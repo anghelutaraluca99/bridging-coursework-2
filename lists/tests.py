@@ -1,5 +1,5 @@
 from django.test import TestCase
-from lists.models import Item
+from lists.models import CV
 
 class HomePageTest(TestCase):
 
@@ -48,6 +48,31 @@ class AwardsPageTest(TestCase):
         response = self.client.get('/edit_awards')
         self.assertTemplateUsed(response, 'edit_awards.html')
 
+
+class CVModelTest(TestCase):
+    
+    def test_saving_and_retrieving_items(self):
+        first_item = CV()
+        first_item.name_surname = 'Jane Doe'
+        first_item.address = 'N/A'
+        first_item.email = 'janedoe@email.com'
+        first_item.about_description = 'N/A'
+        first_item.save()
+
+        second_item = CV()
+        second_item.name_surname = 'John Doe'
+        second_item.address = 'N/A'
+        second_item.email = 'johndoe@email.com'
+        second_item.about_description = 'N/A'
+        second_item.save()
+
+        saved_items = CV.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        self.assertEqual(first_saved_item.name_surname, 'Jane Doe')
+        self.assertEqual(second_saved_item.name_surname, 'John Doe')
 
     
 #    def test_can_save_a_POST_request(self):

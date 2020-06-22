@@ -18,7 +18,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_edit_buttons(self):
         self.browser.get('http://localhost:8000')
         time.sleep(1)
-        
+#       removing this as I'm implementing all functionality on the homepage
 #        edit_about_button = self.browser.find_element_by_name("edit_about")
 #        self.assertEqual(False, edit_about_button is None)
         
@@ -42,16 +42,54 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
         time.sleep(1)
         
+#        Getting the uneditaable contents of the page and testing that
+#       they display the correct value and that they are displaying
+#       Also checking that the editable contents are not displaying
         edit_about_button=self.browser.find_element_by_id("edit_about")
         submit_about_button = self.browser.find_element_by_id("submit_about")
         editable_about_div = self.browser.find_element_by_id("editable_about")
         uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
+        
+        uneditable_name_surname = self.browser.find_element_by_id("uneditable_name_surname")
+        uneditable_address = self.browser.find_element_by_id("uneditable_address")
+        uneditable_email = self.browser.find_element_by_id("uneditable_email")
+        uneditable_about_description = self.browser.find_element_by_id("uneditable_about_description")
+        
+        self.assertEqual(uneditable_name_surname.text, "NAME SURNAME")
+        self.assertEqual(uneditable_address.text, "ADDRESS")
+        self.assertEqual(uneditable_email.text, "email@email.com")
+        self.assertEqual(uneditable_about_description.text, "Short Description")
         
         self.assertEqual(editable_about_div.value_of_css_property('display'), "none")
         self.assertEqual(uneditable_about_div.value_of_css_property('display'), "block")
         
         edit_about_button.click();
         time.sleep(1)
+        
+#        Checking that the editable content has the right inputs
+        editable_name_surname = self.browser.find_element_by_id("name_surname")
+        editable_address = self.browser.find_element_by_id("address")
+        editable_email = self.browser.find_element_by_id("email")
+        editable_about_description = self.browser.find_element_by_id("about_description")
+        
+        self.assertEqual(editable_name_surname.text, "NAME SURNAME")
+        self.assertEqual(editable_address.text, "ADDRESS")
+        self.assertEqual(editable_email.text, "email@email.com")
+        self.assertEqual(editable_about_description.text, "Short Description")
+        
+#        Changing the contents of the editable inputs
+        editable_name_surname.click()
+        editable_name_surname.clear()
+        editable_name_surname.send_keys("JANE DOE")
+        editable_address.click()
+        editable_address.clear()
+        editable_address.send_keys("UNKNOWN")
+        editable_email.click()
+        editable_email.clear()
+        editable_email.send_keys("janedoe@email.com")
+        editable_about_description.click()
+        editable_about_description.clear()
+        editable_about_description.send_keys("N/A")
         
         editable_about_div = self.browser.find_element_by_id("editable_about")
         uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
@@ -62,13 +100,27 @@ class NewVisitorTest(unittest.TestCase):
         submit_about_button.click();
         time.sleep(1)
         
+        edit_about_button=self.browser.find_element_by_id("edit_about")
+        submit_about_button = self.browser.find_element_by_id("submit_about")
+        editable_about_div = self.browser.find_element_by_id("editable_about")
+        uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
+        
+        uneditable_name_surname = self.browser.find_element_by_id("uneditable_name_surname")
+        uneditable_address = self.browser.find_element_by_id("uneditable_address")
+        uneditable_email = self.browser.find_element_by_id("uneditable_email")
+        uneditable_about_description = self.browser.find_element_by_id("uneditable_about_description")
+        
+        self.assertEqual(uneditable_name_surname.text, "JANE DOE")
+        self.assertEqual(uneditable_address.text, "UNKNOWN")
+        self.assertEqual(uneditable_email.text, "janedoe@email.com")
+        self.assertEqual(uneditable_about_description.text, "N/A")
+        
         editable_about_div = self.browser.find_element_by_id("editable_about")
         uneditable_about_div = self.browser.find_element_by_id("uneditable_about")
         
         self.assertEqual(editable_about_div.value_of_css_property('display'), "none")
         self.assertEqual(uneditable_about_div.value_of_css_property('display'), "block")
-        
-        
+    
 #    def check_for_row_in_list_table(self, row_text):
 #       table = self.browser.find_element_by_id('id_list_table')
 #       rows = table.find_elements_by_tag_name('tr')
