@@ -6,7 +6,11 @@ class CV(models.Model):
     email = models.EmailField(default='');
     about_description = models.TextField(default='');
     
-
+class JOB(models.Model):
+    job_title = models.TextField(default='');
+    company = models.TextField(default='');
+    job_description = models.TextField(default='');
+    job_dates = models.TextField(default='');
 
 #from django.db import models
 #

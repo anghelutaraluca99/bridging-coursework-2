@@ -1,5 +1,5 @@
 from django.test import TestCase
-from lists.models import CV
+from lists.models import CV, JOB
 
 class HomePageTest(TestCase):
 
@@ -73,6 +73,35 @@ class CVModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.name_surname, 'Jane Doe')
         self.assertEqual(second_saved_item.name_surname, 'John Doe')
+
+class JOBModelTest(TestCase):
+    
+    def test_saving_and_retrieving_items(self):
+        first_item = JOB()
+        first_item.job_title = 'Front end developer'
+        first_item.company = 'Google'
+        first_item.job_description = 'N/A'
+        first_item.job_dates = 'March 2019 - March 2020'
+        first_item.save()
+
+        second_item = JOB()
+        second_item.job_title = 'Full stack developer'
+        second_item.company = 'Apple'
+        second_item.job_description = 'N/A'
+        second_item.job_dates = 'March 2020 - Present'
+        second_item.save()
+
+        saved_items = JOB.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        self.assertEqual(first_saved_item.job_title, 'Front end developer')
+        self.assertEqual(first_saved_item.company, 'Google')
+        self.assertEqual(first_saved_item.job_dates, 'March 2020 - Present')
+        self.assertEqual(first_saved_item.job_description, 'N/A')
+        self.assertEqual(second_saved_item.company, 'Apple')
+
 
     
 #    def test_can_save_a_POST_request(self):
