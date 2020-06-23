@@ -21,9 +21,8 @@ class NewVisitorTest(unittest.TestCase):
 #       removing this as I'm implementing all functionality on the homepage
 #        edit_about_button = self.browser.find_element_by_name("edit_about")
 #        self.assertEqual(False, edit_about_button is None)
-        
-        edit_experience_button = self.browser.find_element_by_name("edit_experience")
-        self.assertEqual(False, edit_experience_button is None)
+#        edit_experience_button = self.browser.find_element_by_name("edit_experience")
+#        self.assertEqual(False, edit_experience_button is None)
         
         edit_education_button = self.browser.find_element_by_name("edit_education")
         self.assertEqual(False, edit_education_button is None)

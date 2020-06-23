@@ -1,5 +1,5 @@
 from django.test import TestCase
-from lists.models import CV, JOB
+from lists.models import CV, JOB, EDUCATION, INTERESTS, AWARDS
 
 class HomePageTest(TestCase):
 
@@ -98,12 +98,90 @@ class JOBModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.job_title, 'Front end developer')
         self.assertEqual(first_saved_item.company, 'Google')
-        self.assertEqual(first_saved_item.job_dates, 'March 2020 - Present')
+        self.assertEqual(first_saved_item.job_dates, 'March 2019 - March 2020')
         self.assertEqual(first_saved_item.job_description, 'N/A')
         self.assertEqual(second_saved_item.company, 'Apple')
 
-
+class EDUCATIONModelTest(TestCase):
     
+    def test_saving_and_retrieving_items(self):
+        first_item = EDUCATION()
+        first_item.institution = 'University of Birmingham'
+        first_item.title = 'Computer Science'
+        first_item.description = 'N/A'
+        first_item.grade = '1st'
+        first_item.dates = 'September 2018 - Present'
+        first_item.save()
+
+        second_item = EDUCATION()
+        second_item.institution = 'CNGRC'
+        second_item.title = 'MI'
+        second_item.description = 'N/A'
+        second_item.grade = '9.65'
+        second_item.dates = 'September 2014 - June 2018'
+        second_item.save()
+
+        saved_items = EDUCATION.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        
+        self.assertEqual(first_saved_item.institution, 'University of Birmingham')
+        self.assertEqual(first_saved_item.title, 'Computer Science')
+        self.assertEqual(first_saved_item.description, 'N/A')
+        self.assertEqual(first_saved_item.grade, '1st')
+        self.assertEqual(first_saved_item.dates, 'September 2018 - Present')
+        
+        self.assertEqual(second_saved_item.institution, 'CNGRC')
+        self.assertEqual(second_saved_item.title, 'MI')
+        self.assertEqual(second_saved_item.description, 'N/A')
+        self.assertEqual(second_saved_item.grade, '9.65')
+        self.assertEqual(second_saved_item.dates, 'September 2014 - June 2018')
+        
+class INTERESTSModelTest(TestCase):
+    
+    def test_saving_and_retrieving_items(self):
+    
+        first_item = INTERESTS()
+        first_item.description = 'N/A'
+        first_item.save()
+        
+        second_item = INTERESTS()
+        second_item.description = 'N/A2'
+        second_item.save()
+        
+        saved_items = INTERESTS.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        
+        self.assertEqual(first_saved_item.description, 'N/A')
+        self.assertEqual(second_saved_item.description, 'N/A2')
+        
+
+class AWARDSModelTest(TestCase):
+        
+    def test_saving_and_retrieving_items(self):
+    
+        first_item = AWARDS()
+        first_item.award = 'N/A'
+        first_item.save()
+        
+        second_item = AWARDS()
+        second_item.award = 'N/A2'
+        second_item.save()
+        
+        saved_items = AWARDS.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        
+        self.assertEqual(first_saved_item.award, 'N/A')
+        self.assertEqual(second_saved_item.award, 'N/A2')
+        
 #    def test_can_save_a_POST_request(self):
 #        self.client.post('/', data={'item_text': 'A new list item'})
 #

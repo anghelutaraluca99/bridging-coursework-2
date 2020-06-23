@@ -33,19 +33,20 @@ def home_page(request):
         email = request.POST.get('email_input', "")
         about_description = request.POST.get('about_description_input', "")
         
-        cv = CV.objects.all()
-        print(len(cv))
-        
-        if len(cv) == 0:
-            cv = CV(name_surname = name_surname, address = address, email = email, about_description = about_description)
-            cv.save()
-        else :
-            cv[0].name_surname = name_surname
-            cv[0].address = address
-            cv[0].email = email
-            cv[0].about_description = about_description
-            cv[0].save()
-        return redirect('/')
+        if name_surname != "" or address != "" or email != "" or about_description != "" :
+            
+            cv = CV.objects.all()
+            
+            if len(cv) == 0:
+                cv = CV(name_surname = name_surname, address = address, email = email, about_description = about_description)
+                cv.save()
+            else :
+                cv[0].name_surname = name_surname
+                cv[0].address = address
+                cv[0].email = email
+                cv[0].about_description = about_description
+                cv[0].save()
+            return redirect('/')
     else:
         if len(CV.objects.all()) > 0:
             cv = CV.objects.all()[0]

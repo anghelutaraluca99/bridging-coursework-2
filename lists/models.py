@@ -12,6 +12,19 @@ class JOB(models.Model):
     job_description = models.TextField(default='');
     job_dates = models.TextField(default='');
 
+class EDUCATION(models.Model):
+    institution = models.TextField(default='');
+    title = models.TextField(default='');
+    description = models.TextField(default='');
+    grade = models.TextField(default='');
+    dates = models.TextField(default='');
+    
+class INTERESTS(models.Model):
+    description = models.TextField(default='');
+    
+class AWARDS(models.Model):
+    award = models.TextField(default='');
+    
 #from django.db import models
 #
 #class Item(models.Model):
