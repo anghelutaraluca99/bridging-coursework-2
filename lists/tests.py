@@ -7,12 +7,13 @@ class HomePageTest(TestCase):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
 
+#   REMOVED TEST AS I'M CHANGING THE ARCHITECTURE OF THE WEBSITE
 
-class AboutPageTest(TestCase):
-
-    def test_uses_edit_about_template(self):
-        response = self.client.get('/edit_about')
-        self.assertTemplateUsed(response, 'edit_about.html')
+#class AboutPageTest(TestCase):
+#
+#    def test_uses_edit_about_template(self):
+#        response = self.client.get('/edit_about')
+#        self.assertTemplateUsed(response, 'edit_about.html')
 
 
 class ExperiencePageTest(TestCase):
