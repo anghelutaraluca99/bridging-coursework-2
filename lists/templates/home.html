@@ -39,7 +39,6 @@
             <section class="resume-section" id="about">
                 <div style="display:none" class="resume-section-content" id="editable_about">
                     <form action="/edit_about" method="POST">
-<!--                        <form>-->
                         <h1 class="mb-0" contentEditable="true" name="name_surname" id="name_surname">Name Surname</h1>
                         <div class="subheading mb-5" contentEditable="true"  name="address" id="address">Address</div>
                         <a name="email" id="email" contentEditable="true" href="mailto:name@email.com">email@email.com</a>
@@ -72,38 +71,75 @@
             <section class="resume-section" id="experience">
                 <div class="resume-section-content" name="uneditable_experience" id="uneditable_experience">
                     <h2 class="mb-5">Experience</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Senior Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                    <div id="jobs">
+                        <div id="uneditable_jobs">
+                            {% for job in jobs %}
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5" id="uneditable_job_{{ job.id }}">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0" id="uneditable_job_title_{{ job.id }}" name="uneditable_job_title_{{ job.id }}">{{ job.title }}</h3>
+                                    <div class="subheading mb-3" id="uneditable_job_company_{{ job.id }}" name="uneditable_job_company_{{ job.id }}">{{ job.company }}</div>
+                                    <p id="uneditable_job_description_{{ job.id }}" name="uneditable_job_description_{{ job.id }}">{{ job.description }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary" id="uneditable_job_dates_{{ job.id }}" name="uneditable_job_dates_{{ job.id }}">{{ job.dates }}</span></div>
+                            </div>
+                            
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5" id="editable_job_{{ job.id }}" style="display:none">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0" contenteditable="true" style="display:none" id="editable_job_title_{{ job.id }}" name="editable_job_title_{{ job.id }}">{{ job.title }}</h3>
+                                    <div class="subheading mb-3" contenteditable="true" style="display:none" id="editable_job_company_{{ job.id }}" name="editable_job_company_{{ job.id }}">{{ job.company }}</div>
+                                    <p contenteditable="true" style="display:none" id="editable_job_description_{{ job.id }}" name="editable_job_description_{{ job.id }}">{{ job.description }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary" contenteditable="true" id="editable_job_dates_{{ job.id }}" name="editable_job_dates_{{ job.id }}" style="display:none">{{ job.dates }}</span></div>
+                                <p style="display:none" id="job_id_{{ job.id }}" name="job_id_{{ job.id }}">{{ job.id }}</p>
+                            </div>
+                            
+                            <button id="edit_experience_{{ job.id }}" onclick="
+                                hideStuff('uneditable_job_title_{{ job.id }}');
+                                hideStuff('uneditable_job_company_{{ job.id }}');
+                                hideStuff('uneditable_job_description_{{ job.id }}');
+                                hideStuff('uneditable_job_dates_{{ job.id }}');
+                                hideStuff('edit_experience_{{ job.id }}');
+                                
+                                showStuff('editable_job_title_{{ job.id }}');
+                                showStuff('editable_job_company_{{ job.id }}');
+                                showStuff('editable_job_description_{{ job.id }}');
+                                showStuff('editable_job_dates_{{ job.id }}');
+                                showStuff('submit_experience_{{ job.id }}')"> Edit job </button>
+                            
+                            <button style="display:none" id="submit_experience_{{ job.id }}" onclick="
+                                hideStuff('editable_job_title_{{ job.id }}');
+                                hideStuff('editable_job_company_{{ job.id }}');
+                                hideStuff('editable_job_description_{{ job.id }}');
+                                hideStuff('editable_job_dates_{{ job.id }}');
+                                hideStuff('submit_experience_{{ job.id }}');
+
+                                showStuff('uneditable_job_title_{{ job.id }}');
+                                showStuff('uneditable_job_company_{{ job.id }}');
+                                showStuff('uneditable_job_description_{{ job.id }}');
+                                showStuff('uneditable_job_dates_{{ job.id }}');
+                                showStuff('edit_experience_{{ job.id }}');
+                                
+                                addInput('editable_job_title_{{ job.id }}', 'edit_job_title');
+                                addInput('editable_job_company_{{ job.id }}', 'edit_job_company');
+                                addInput('editable_job_description_{{ job.id }}', 'edit_job_description');
+                                addInput('editable_job_dates_{{ job.id }}', 'edit_job_dates');
+                                addInput('job_id_{{ job.id }}', 'job_id');
+                                
+                                clickButton('submit_edited_job');
+                                "
+                            > Submit </button>
+                            {% endfor %}
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">December 2011 - March 2013</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Junior Web Designer</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">July 2010 - December 2011</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Design Intern</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2008 - June 2010</span></div>
-                    </div>
+                    <form action="/edit_experience" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="job_id" name="job_id" style="display:none"></input>
+                        <input type="text" id="edit_job_title" name="edit_job_title" style="display:none"></input>
+                        <input type="text" id="edit_job_company" name="edit_job_company" style="display:none"></input>
+                        <input type="text" id="edit_job_description" name="edit_job_description" style="display:none"></input>
+                        <input type="text" id="edit_job_dates" name="edit_job_dates" style="display:none"></input>
+                        <input type="submit" value="Submit" id="submit_edited_job" name="submit_edited_job" style="display:none"></input>
+                    </form>
+                    <button id="add_experience" onclick="addJob(); hideStuff('add_experience')">Add job </button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -221,16 +257,42 @@
         <script>
             function hideStuff(id) {
                 document.getElementById(id).style.display = "none";
-                console.log("hide")
             }
             function showStuff(id) {
                 document.getElementById(id).style.display = "block";
-                console.log("show")
             }
             function addInput(id_to_be_copied_from, id_to_be_pasted_to) {
                 var input = document.getElementById(id_to_be_pasted_to)
                 var element = document.getElementById(id_to_be_copied_from)
                 input.value = element.textContent
+            }
+            function clickButton(id){
+                document.getElementById(id).click();
+                console.log("Button clicked");
+            }
+            function addJob() {
+                var  html = `
+                <form action="/add_experience" method="POST">
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-5" id="editable_job">
+                    <div class="flex-grow-1">
+                        <h3 class="mb-0" contenteditable="true" id="editable_job_title">Add job title</h3>
+                        <div class="subheading mb-3" contenteditable="true" id="editable_job_company">Add company</div>
+                        <p contenteditable="true" id="editable_job_description">Add short description</p>
+                        </div>
+                    
+                    <div class="flex-shrink-0" contenteditable="true" id="editable_job_dates"><span class="text-primary">Add dates</span></div>
+                </div>
+                {% csrf_token %}
+                <input type="text" hidden id="new_job_title" name="new_job_title"></input>
+                <input type="text" hidden id="new_job_company" name="new_job_company"></input>
+                <input type="text" hidden id="new_job_description" name="new_job_description"></input>
+                <input type="text" hidden id="new_job_dates" name="new_job_dates"></input>
+                
+                <input type="submit" onclick="addInput('editable_job_title', 'new_job_title'); addInput('editable_job_company', 'new_job_company'); addInput('editable_job_description', 'new_job_description'); addInput('editable_job_dates', 'new_job_dates')" value="Submit" id="submit_new_job">
+
+                </form>`;
+                var div = document.getElementById("jobs");
+                div.innerHTML += html
             }
         </script>
     </body>

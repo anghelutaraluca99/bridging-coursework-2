@@ -7,10 +7,10 @@ class CV(models.Model):
     about_description = models.TextField(default='');
     
 class JOB(models.Model):
-    job_title = models.TextField(default='');
+    title = models.TextField(default='');
     company = models.TextField(default='');
-    job_description = models.TextField(default='');
-    job_dates = models.TextField(default='');
+    description = models.TextField(default='');
+    dates = models.TextField(default='');
 
 class EDUCATION(models.Model):
     institution = models.TextField(default='');

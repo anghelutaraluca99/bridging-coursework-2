@@ -1,11 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from lists.models import CV
-
-def home_page(request):
-    return render(request, 'home.html', {
-        'new_item_text': request.POST.get('cv', ''),
-    })
+from lists.models import CV, JOB
     
 def edit_about(request):
     if request.method == 'POST':
@@ -28,9 +23,32 @@ def edit_about(request):
         return redirect('/')
     
 def edit_experience(request):
-    return render(request, 'edit_experience.html')
+    if request.method == 'POST':
+        id = request.POST.get('job_id', "")
+        title = request.POST.get('edit_job_title', "")
+        company = request.POST.get('edit_job_company', "")
+        description = request.POST.get('edit_job_description', "")
+        dates = request.POST.get('edit_job_dates', "")
+        
+        job = JOB.objects.get(id = id)
+        job.title = title
+        job.company = company
+        job.description = description
+        job.dates = dates
+        job.save()
+        
+    return redirect('/')
 
 def add_experience(request):
+    if request.method == 'POST':
+        title = request.POST.get('new_job_title', "")
+        company = request.POST.get('new_job_company', "")
+        description = request.POST.get('new_job_description', "")
+        dates = request.POST.get('new_job_dates', "")
+        
+        job = JOB(title=title, company=company, description=description, dates=dates)
+        job.save()
+        print("saved new job")
     return redirect('/')
 
 def edit_education(request):
@@ -53,16 +71,18 @@ def home_page(request):
         address = cv.address
         email = cv.email
         about_description = cv.about_description
-        print(name_surname)
     else:
         name_surname = 'NAME SURNAME'
         address = 'ADDRESS'
         email = 'email@email.com'
         about_description = 'Short Description'
+    
+    jobs = JOB.objects.all()
         
     return render(request, 'home.html', {
         'name_surname': name_surname,
         'address': address,
         'email': email,
         'about_description': about_description,
+        'jobs': jobs,
     })
