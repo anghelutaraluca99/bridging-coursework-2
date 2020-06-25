@@ -39,10 +39,10 @@
             <section class="resume-section" id="about">
                 <div style="display:none" class="resume-section-content" id="editable_about">
                     <form action="/edit_about" method="POST">
-                        <h1 class="mb-0" contentEditable="true" name="name_surname" id="name_surname">Name Surname</h1>
-                        <div class="subheading mb-5" contentEditable="true"  name="address" id="address">Address</div>
-                        <a name="email" id="email" contentEditable="true" href="mailto:name@email.com">email@email.com</a>
-                        <p class="lead mb-5" contentEditable="true" name="about_description" id="about_description">Short Description</p>
+                        <h1 class="mb-0" contentEditable="true" name="name_surname" id="name_surname">{{ cv.name_surname }}</h1>
+                        <div class="subheading mb-5" contentEditable="true"  name="address" id="address">{{ cv.address }}</div>
+                        <a name="email" id="email" contentEditable="true" href="mailto:name@email.com">{{ cv.email }}</a>
+                        <p class="lead mb-5" contentEditable="true" name="about_description" id="about_description">{{ cv.about_description }}</p>
                         <div class="social-icons">
                             <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a><a class="social-icon" href="#"><i class="fab fa-github"></i></a><a class="social-icon" href="#"><i class="fab fa-twitter"></i></a><a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                         </div>
@@ -55,10 +55,10 @@
                     </form>
                 </div>
                 <div class="resume-section-content" id="uneditable_about">
-                    <h1 class="mb-0" id="uneditable_name_surname">{{ name_surname }}</h1>
-                    <div class="subheading mb-5" id="uneditable_address">{{ address }}</div>
-                    <a href="mailto:name@email.com" id="uneditable_email">{{ email }}</a>
-                    <p class="lead mb-5" id="uneditable_about_description">{{ about_description }}</p>
+                    <h1 class="mb-0" id="uneditable_name_surname">{{ cv.name_surname }}</h1>
+                    <div class="subheading mb-5" id="uneditable_address">{{ cv.address }}</div>
+                    <a href="mailto:name@email.com" id="uneditable_email">{{ cv.email }}</a>
+                    <p class="lead mb-5" id="uneditable_about_description">{{ cv.about_description }}</p>
                     <div class="social-icons">
                         <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a><a class="social-icon" href="#"><i class="fab fa-github"></i></a><a class="social-icon" href="#"><i class="fab fa-twitter"></i></a><a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                     </div>
@@ -265,10 +265,33 @@
             <!-- Interests-->
             <section class="resume-section" id="interests">
                 <div class="resume-section-content">
-                    <a href="edit_interests" class="btn btn-default" name="edit_interests">Edit interests section</a>
                     <h2 class="mb-5">Interests</h2>
-                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+                    <p id="uneditable_interests" name="uneditable_interests">{{ interests.description }}</p>
+                    <p id="editable_interests" name="editable_interests" contentEditable="true" style="display:none">{{ interests.description }}</p>
+                    
+                    <form action="/edit_interests" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="edit_interests" name="edit_interests" style="display:none"></input>
+                        <input type="submit" value="Submit" id="submit_interests" name="submit_interests" style="display:none"></input>
+                    </form>
+                    
+                    <button id="edit_interests_button" onclick="
+                        hideStuff('uneditable_interests');
+                        hideStuff('edit_interests_button');
+                        showStuff('editable_interests');
+                        showStuff('save_interests');
+                        "
+                        > Edit </button>
+                    <button id="save_interests" onclick="
+                        hideStuff('editable_interests');
+                        hideStuff('save_interests');
+                        showStuff('uneditable_interests');
+                        showStuff('edit_interests_button');
+                        
+                        addInput('editable_interests', 'edit_interests');
+                        clickButton('submit_interests');
+                        " style="display:none"
+                        > Submit </button>
                 </div>
             </section>
             <hr class="m-0" />

@@ -320,86 +320,41 @@ class EducationPageTest(unittest.TestCase):
         self.assertEqual(grade.text, "9.65")
         self.assertEqual(dates.text, "SEPTEMBER 2014 - JUNE 2018")
         
-#        <section class="resume-section" id="education">
-#            <div class="resume-section-content" id="education_div">
-#                <h2 class="mb-5">Education</h2>
-#                {% for ed in education %}
-#                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-#                    <div class="flex-grow-1">
-#                        <h3 class="mb-0" id="uneditable_school_{{ ed.id }}" name="uneditable_school_{{ ed.id }}">{{ ed.school }}</h3>
-#                        <div class="subheading mb-3" id="uneditable_qualification_{{ ed.id }}" name="uneditable_qualification_{{ ed.id }}">{{ ed.qualification }}</div>
-#                        <div id="uneditable_education_description_{{ ed.id }}" name="uneditable_education_description_{{ ed.id }}">{{ ed.description }}</div>
-#                        <p id="uneditable_education_grade_{{ ed.id }}" name="uneditable_education_grade_{{ ed.id }}">{{ ed.grade }}</p>
-#                    </div>
-#                    <div class="flex-shrink-0" id="uneditable_education_dates_{{ ed.id }}" name="uneditable_education_dates_{{ ed.id }}"><span class="text-primary">{{ ed.dates }}</span></div>
-#                </div>
-#
-#                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-#                    <div class="flex-grow-1">
-#                        <h3 class="mb-0" id="editable_school_{{ ed.id }}" name="editable_school_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.school }}</h3>
-#                        <div class="subheading mb-3" id="editable_qualification_{{ ed.id }}" name="editable_qualification_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.qualification }}</div>
-#                        <div id="editable_education_description_{{ ed.id }}" name="editable_education_description_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.description }}</div>
-#                        <p id="editable_education_grade_{{ ed.id }}" name="editable_education_grade_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.grade }}</p>
-#                    </div>
-#                    <div class="flex-shrink-0" id="editable_education_dates_{{ ed.id }}" name="editable_education_dates_{{ ed.id }}"><span class="text-primary" contenteditable="true" style="display:none">{{ ed.dates }}</span></div>
-#                    <p name="ed_id{{ ed.id }}" id="ed_id{{ ed.id }}" style="display:none">{{ ed.id }}</p>
-#                </div>
-#
-#                <button id="edit_education_{{ ed.id }}" onclick="
-#                    hideStuff('uneditable_school_{{ ed.id }}');
-#                    hideStuff('uneditable_qualification_{{ ed.id }}');
-#                    hideStuff('uneditable_education_description_{{ ed.id }}');
-#                    hideStuff('uneditable_education_grade_{{ ed.id }}');
-#                    hideStuff('uneditable_education_dates_{{ ed.id }}');
-#                    hideStuff('edit_education_{{ ed.id }}');
-#
-#                    showStuff('editable_school_{{ ed.id }}');
-#                    showStuff('editable_qualification_{{ ed.id }}');
-#                    showStuff('editable_education_description_{{ ed.id }}');
-#                    showStuff('editable_education_grade_{{ ed.id }}');
-#                    showStuff('editable_education_dates_{{ ed.id }}');
-#                    showStuff('submit_education_{{ ed.id }}')"> Edit  </button>
-#
-#                <button style="display:none" id="submit_education_{{ ed.id }}" onclick="
-#                    hideStuff('editable_school_{{ ed.id }}');
-#                    hideStuff('editable_qualification_{{ ed.id }}');
-#                    hideStuff('editable_education_description_{{ ed.id }}');
-#                    hideStuff('editable_education_grade_{{ ed.id }}');
-#                    hideStuff('editable_education_dates_{{ ed.id }}');
-#                    hideStuff('submit_education_{{ ed.id }}');
-#
-#                    showStuff('uneditable_school_{{ ed.id }}');
-#                    showStuff('uneditable_qualification_{{ ed.id }}');
-#                    showStuff('uneditable_education_description_{{ ed.id }}');
-#                    showStuff('uneditable_education_grade_{{ ed.id }}');
-#                    showStuff('uneditable_education_dates_{{ ed.id }}');
-#                    showStuff('edit_education_{{ ed.id }}');
-#
-#                    addInput('editable_school_{{ ed.id }}', 'edit_school');
-#                    addInput('editable_qualification_{{ ed.id }}', 'edit_qualification');
-#                    addInput('editable_education_description_{{ ed.id }}', 'edit_education_description');
-#                    addInput('editable_education_grade_{{ ed.id }}', 'edit_education_grade');
-#                    addInput('editable_education_dates_{{ ed.id }}', 'edit_education_dates');
-#                    addInput('ed_id{{ ed.id }}', 'ed_id');
-#
-#                    clickButton('submit_edited_education');"
-#                > Submit </button>
-#
-#                {% endfor %}
-#                <form action="/edit_education" method="POST">
-#                    {% csrf_token %}
-#                    <input type="text" id="ed_id" name="ed_id" style="display:none"></input>
-#                    <input type="text" id="edit_school" name="edit_school" style="display:none"></input>
-#                    <input type="text" id="edit_qualification" name="edit_qualification" style="display:none"></input>
-#                    <input type="text" id="edit_education_description" name="edit_education_description" style="display:none"></input>
-#                    <input type="text" id="edit_education_grade" name="edit_education_grade" style="display:none"></input>
-#                    <input type="text" id="edit_education_dates" name="edit_education_dates" style="display:none"></input>
-#                    <input type="submit" value="Submit" id="submit_edited_education" name="submit_edited_education" style="display:none"></input>
-#                </form>
-#                <button onclick="addEducation()">Add education</button>
-#            </div>
-#        </section>
-        
+class InterestsPageTest(unittest.TestCase):
+
+    def setUp(self):
+       self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+       self.browser.quit()
+
+    def test_can_edit_entry(self) :
     
+        self.browser.get('http://localhost:8000')
+        time.sleep(1)
+        
+        interests = self.browser.find_element_by_id('uneditable_interests')
+        edit = self.browser.find_element_by_id('edit_interests_button')
+        
+        self.assertEqual(interests.text, "Add interests")
+        
+        edit.click()
+        time.sleep(1)
+        
+        editable_interests = self.browser.find_element_by_id('editable_interests')
+        submit = self.browser.find_element_by_id('save_interests')
+        
+        self.assertEqual(editable_interests.text, "Add interests")
+        
+        editable_interests.click()
+        editable_interests.clear()
+        editable_interests.send_keys("WEB")
+        
+        submit.click()
+        time.sleep(1)
+        
+        interests = self.browser.find_element_by_id('uneditable_interests')
+        self.assertEqual(interests.text, "WEB")
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

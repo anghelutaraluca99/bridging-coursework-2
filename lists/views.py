@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from lists.models import CV, JOB, EDUCATION
+from lists.models import CV, JOB, EDUCATION, INTERESTS, AWARDS
     
 def edit_about(request):
     if request.method == 'POST':
@@ -91,33 +91,41 @@ def edit_skills(request):
     return render(request, 'edit_skills.html')
 
 def edit_interests(request):
-    return render(request, 'edit_interests.html')
+    if request.method == 'POST':
+        description = request.POST.get('edit_interests', "")
+        interests = INTERESTS.objects.all()[0]
+        interests.description = description
+        interests.save()
+    return redirect('/')
 
 def edit_awards(request):
     return render(request, 'edit_awards.html')
 
 def home_page(request):
     
-    if len(CV.objects.all()) > 0:
-        cv = CV.objects.all()[0]
-        name_surname = cv.name_surname
-        address = cv.address
-        email = cv.email
-        about_description = cv.about_description
-    else:
+    if len(CV.objects.all()) == 0:
         name_surname = 'NAME SURNAME'
         address = 'ADDRESS'
         email = 'email@email.com'
         about_description = 'Short Description'
+        cv = CV(name_surname=name_surname, address=address, email=email, about_description=about_description)
+        cv.save()
     
+    if len(INTERESTS.objects.all()) == 0 :
+        description = 'Add interests'
+        interests = INTERESTS(description = description)
+        interests.save()
+    
+    cv = CV.objects.all()[0]
     jobs = JOB.objects.all()
     education = EDUCATION.objects.all()
-        
+    interests = INTERESTS.objects.all()[0]
+    awards = AWARDS.objects.all()
+    
     return render(request, 'home.html', {
-        'name_surname': name_surname,
-        'address': address,
-        'email': email,
-        'about_description': about_description,
+        'cv' : cv,
         'jobs': jobs,
         'education' : education,
+        'interests' : interests,
+        'awards' : awards,
     })
