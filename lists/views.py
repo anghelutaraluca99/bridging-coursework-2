@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from lists.models import CV, JOB
+from lists.models import CV, JOB, EDUCATION
     
 def edit_about(request):
     if request.method == 'POST':
@@ -48,11 +48,44 @@ def add_experience(request):
         
         job = JOB(title=title, company=company, description=description, dates=dates)
         job.save()
-        print("saved new job")
+    return redirect('/')
+    
+def add_education(request):
+    if request.method == 'POST':
+        school = request.POST.get('new_school', "")
+        qualification = request.POST.get('new_qualification', "")
+        description = request.POST.get('new_education_description', "")
+        grade = request.POST.get('new_grade', "")
+        dates = request.POST.get('new_education_dates', "")
+
+        ed = EDUCATION(school=school, qualification=qualification, description=description, grade=grade, dates=dates)
+        ed.save()
     return redirect('/')
 
 def edit_education(request):
-    return render(request, 'edit_education.html')
+    if request.method == 'POST':
+        id = request.POST.get('ed_id', "")
+        school = request.POST.get('edit_school', "")
+        qualification = request.POST.get('edit_qualification', "")
+        description = request.POST.get('edit_education_description', "")
+        grade = request.POST.get('edit_education_grade', "")
+        dates = request.POST.get('edit_education_dates', "")
+
+        print(id)
+        print(school)
+        print(qualification)
+        print(description)
+        print(grade)
+        print(dates)
+
+        ed = EDUCATION.objects.get(id = id)
+        ed.school = school
+        ed.qualification = qualification
+        ed.description = description
+        ed.grade = grade
+        ed.dates = dates
+        ed.save()
+    return redirect('/')
 
 def edit_skills(request):
     return render(request, 'edit_skills.html')
@@ -78,6 +111,7 @@ def home_page(request):
         about_description = 'Short Description'
     
     jobs = JOB.objects.all()
+    education = EDUCATION.objects.all()
         
     return render(request, 'home.html', {
         'name_surname': name_surname,
@@ -85,4 +119,5 @@ def home_page(request):
         'email': email,
         'about_description': about_description,
         'jobs': jobs,
+        'education' : education,
     })

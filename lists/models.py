@@ -13,8 +13,8 @@ class JOB(models.Model):
     dates = models.TextField(default='');
 
 class EDUCATION(models.Model):
-    institution = models.TextField(default='');
-    title = models.TextField(default='');
+    school = models.TextField(default='');
+    qualification = models.TextField(default='');
     description = models.TextField(default='');
     grade = models.TextField(default='');
     dates = models.TextField(default='');

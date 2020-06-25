@@ -145,26 +145,82 @@
             <hr class="m-0" />
             <!-- Education-->
             <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                <a href="edit_education" class="btn btn-default" name="edit_education">Edit education section</a>
+                <div class="resume-section-content" id="education_div">
                     <h2 class="mb-5">Education</h2>
+                    {% for ed in education %}
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">University of Colorado Boulder</h3>
-                            <div class="subheading mb-3">Bachelor of Science</div>
-                            <div>Computer Science - Web Development Track</div>
-                            <p>GPA: 3.23</p>
+                            <h3 class="mb-0" id="uneditable_school_{{ ed.id }}" name="uneditable_school_{{ ed.id }}">{{ ed.school }}</h3>
+                            <div class="subheading mb-3" id="uneditable_qualification_{{ ed.id }}" name="uneditable_qualification_{{ ed.id }}">{{ ed.qualification }}</div>
+                            <div id="uneditable_education_description_{{ ed.id }}" name="uneditable_education_description_{{ ed.id }}">{{ ed.description }}</div>
+                            <p id="uneditable_education_grade_{{ ed.id }}" name="uneditable_education_grade_{{ ed.id }}">{{ ed.grade }}</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2006 - May 2010</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary" id="uneditable_education_dates_{{ ed.id }}" name="uneditable_education_dates_{{ ed.id }}">{{ ed.dates }}</span></div>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">James Buchanan High School</h3>
-                            <div class="subheading mb-3">Technology Magnet Program</div>
-                            <p>GPA: 3.56</p>
+                            <h3 class="mb-0" id="editable_school_{{ ed.id }}" name="editable_school_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.school }}</h3>
+                            <div class="subheading mb-3" id="editable_qualification_{{ ed.id }}" name="editable_qualification_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.qualification }}</div>
+                            <div id="editable_education_description_{{ ed.id }}" name="editable_education_description_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.description }}</div>
+                            <p id="editable_education_grade_{{ ed.id }}" name="editable_education_grade_{{ ed.id }}" contenteditable="true" style="display:none">{{ ed.grade }}</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2002 - May 2006</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary" contenteditable="true" style="display:none" id="editable_education_dates_{{ ed.id }}" name="editable_education_dates_{{ ed.id }}">{{ ed.dates }}</span></div>
+                        <p name="ed_id{{ ed.id }}" id="ed_id{{ ed.id }}" style="display:none">{{ ed.id }}</p>
                     </div>
+                    
+                    <button id="edit_education_{{ ed.id }}" onclick="
+                        hideStuff('uneditable_school_{{ ed.id }}');
+                        hideStuff('uneditable_qualification_{{ ed.id }}');
+                        hideStuff('uneditable_education_description_{{ ed.id }}');
+                        hideStuff('uneditable_education_grade_{{ ed.id }}');
+                        hideStuff('uneditable_education_dates_{{ ed.id }}');
+                        hideStuff('edit_education_{{ ed.id }}');
+                        
+                        showStuff('editable_school_{{ ed.id }}');
+                        showStuff('editable_qualification_{{ ed.id }}');
+                        showStuff('editable_education_description_{{ ed.id }}');
+                        showStuff('editable_education_grade_{{ ed.id }}');
+                        showStuff('editable_education_dates_{{ ed.id }}');
+                        showStuff('submit_education_{{ ed.id }}')"> Edit  </button>
+                    
+                    <button style="display:none" id="submit_education_{{ ed.id }}" onclick="
+                        hideStuff('editable_school_{{ ed.id }}');
+                        hideStuff('editable_qualification_{{ ed.id }}');
+                        hideStuff('editable_education_description_{{ ed.id }}');
+                        hideStuff('editable_education_grade_{{ ed.id }}');
+                        hideStuff('editable_education_dates_{{ ed.id }}');
+                        hideStuff('submit_education_{{ ed.id }}');
+                        
+                        showStuff('uneditable_school_{{ ed.id }}');
+                        showStuff('uneditable_qualification_{{ ed.id }}');
+                        showStuff('uneditable_education_description_{{ ed.id }}');
+                        showStuff('uneditable_education_grade_{{ ed.id }}');
+                        showStuff('uneditable_education_dates_{{ ed.id }}');
+                        showStuff('edit_education_{{ ed.id }}');
+                        
+                        addInput('editable_school_{{ ed.id }}', 'edit_school');
+                        addInput('editable_qualification_{{ ed.id }}', 'edit_qualification');
+                        addInput('editable_education_description_{{ ed.id }}', 'edit_education_description');
+                        addInput('editable_education_grade_{{ ed.id }}', 'edit_education_grade');
+                        addInput('editable_education_dates_{{ ed.id }}', 'edit_education_dates');
+                        addInput('ed_id{{ ed.id }}', 'ed_id');
+                        
+                        clickButton('submit_edited_education');"
+                    > Submit </button>
+                    
+                    {% endfor %}
+                    <form action="/edit_education" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="ed_id" name="ed_id" style="display:none"></input>
+                        <input type="text" id="edit_school" name="edit_school" style="display:none"></input>
+                        <input type="text" id="edit_qualification" name="edit_qualification" style="display:none"></input>
+                        <input type="text" id="edit_education_description" name="edit_education_description" style="display:none"></input>
+                        <input type="text" id="edit_education_grade" name="edit_education_grade" style="display:none"></input>
+                        <input type="text" id="edit_education_dates" name="edit_education_dates" style="display:none"></input>
+                        <input type="submit" value="Submit" id="submit_edited_education" name="submit_edited_education" style="display:none"></input>
+                    </form>
+                    <button onclick="addEducation()" id="add_education" name="add_education">Add education</button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -292,6 +348,32 @@
 
                 </form>`;
                 var div = document.getElementById("jobs");
+                div.innerHTML += html
+            }
+            function addEducation() {
+                var html = `
+                <form action="/add_education" method="POST">
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0" id="editable_school" name="editable_school" contenteditable="true">Add school</h3>
+                            <div class="subheading mb-3" id="editable_qualification" name="editable_qualification" contenteditable="true">Add qualification</div>
+                            <div id="editable_education_description" name="editable_education_description" contenteditable="true">Add description</div>
+                            <p id="editable_education_grade" name="editable_education_grade" contenteditable="true">Add grade</p>
+                        </div>
+                        <div class="flex-shrink-0" id="editable_education_dates" name="editable_education_dates" contenteditable="true"><span class="text-primary" contenteditable="true">Add dates</span></div>
+                    </div>
+                    
+                    {% csrf_token %}
+                    <input type="text" hidden id="new_school" name="new_school"></input>
+                    <input type="text" hidden id="new_qualification" name="new_qualification"></input>
+                    <input type="text" hidden id="new_education_description" name="new_education_description"></input>
+                    <input type="text" hidden id="new_grade" name="new_grade"></input>
+                    <input type="text" hidden id="new_education_dates" name="new_education_dates"></input>
+                    
+                    <input type="submit" onclick="addInput('editable_school', 'new_school'); addInput('editable_qualification', 'new_qualification'); addInput('editable_education_description', 'new_education_description'); addInput('editable_education_grade', 'new_grade'); addInput('editable_education_dates', 'new_education_dates')" value="Submit" id="submit_new_education">
+                </form>
+                `
+                var div = document.getElementById("education_div");
                 div.innerHTML += html
             }
         </script>
