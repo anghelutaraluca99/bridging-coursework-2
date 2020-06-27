@@ -99,7 +99,23 @@ def edit_interests(request):
     return redirect('/')
 
 def edit_awards(request):
-    return render(request, 'edit_awards.html')
+    if request.method == 'POST':
+        award = request.POST.get('edit_award', "")
+        id = request.POST.get('award_id', "")
+        print(award)
+        print(id)
+        aw = AWARDS.objects.get(id=id)
+        aw.award = award
+        aw.save()
+    return redirect('/')
+
+
+def add_awards(request):
+    if request.method == 'POST':
+        award = request.POST.get('new_award', "")
+        award = AWARDS(award=award)
+        award.save()
+    return redirect('/')
 
 def home_page(request):
     

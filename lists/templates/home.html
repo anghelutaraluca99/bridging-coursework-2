@@ -298,31 +298,70 @@
             <!-- Awards-->
             <section class="resume-section" id="awards">
                 <div class="resume-section-content">
-                <a href="edit_awards" class="btn btn-default" name="edit_awards">Edit awards tsection</a>
                     <h2 class="mb-5">Awards & Certifications</h2>
                     <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>Google Analytics Certified Developer
+                        {% for award in awards %}
+                        <li id="uneditable_award_{{ award.id }}" name="uneditable_award_{{ award.id }}">
+                            <span class="fa-li">
+                                <i class="fas fa-trophy text-warning">
+                                 </i>
+                            </span>
+                            {{ award.award }}
+                            <button id="edit_award_{{ award.id }}" name="edit_award_{{ award.id }}" onclick="
+                                hideStuff('uneditable_award_{{ award.id }}');
+                                showStuff('editable_award_{{ award.id }}');
+                                "> Edit </button>
                         </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>Mobile Web Specialist - Google Certification
+                        
+                        <li id="editable_award_{{ award.id }}" name="editable_award_{{ award.id }}" style="display:none">
+                            <span class="fa-li">
+                                <i class="fas fa-trophy text-warning">
+                                 </i>
+                            </span>
+                            <div id="editable_award_input_{{ award.id }}" name="editable_award_input_{{ award.id }}"  contenteditable="true">{{ award.award }}</div>
+                            <span style="display:none" id="award_id_{{ award.id }}" name="award_id_{{ award.id }}">{{ award.id }}</span>
+                            <button id="save_award_{{ award.id }}" name="save_award_{{ award.id }}" onclick="
+                                showStuff('uneditable_award_{{ award.id }}');
+                                hideStuff('editable_award_{{ award.id }}');
+                                
+                                addInput('editable_award_input_{{ award.id }}', 'edit_award');
+                                addInput('award_id_{{ award.id }}', 'award_id');
+                                clickButton('submit_edited_award');
+                                "> Submit </button>
                         </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>1<sup>st </sup>Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>1<sup>st </sup>Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>2<sup>nd </sup>Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>1<sup>st </sup>Place - James Buchanan High School - Hackathon 2006
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>3<sup>rd </sup>Place - James Buchanan High School - Hackathon 2005
+                        {% endfor %}
+                        <li id="new_award_input" name="new_award_input" style="display:none" contenteditable="true">
+                            <span class="fa-li">
+                                <i class="fas fa-trophy text-warning">
+                                 </i>
+                            </span>
+                             Add award
                         </li>
                     </ul>
+                    <button id="add_award" onclick="
+                        hideStuff('add_award');
+                        showStuff('new_award_input');
+                        showStuff('submit_award');
+                        "> Add award </button>
+                    <button id="submit_award" style="display:none" onclick="
+                        showStuff('add_award');
+                        hideStuff('new_award_input');
+                        hideStuff('submit_award');
+                        addInput('new_award_input', 'new_award');
+                        clickButton('submit_new_award');
+                        "> Submit </button>
+                    <form action="/add_awards" method="POST">
+                    {% csrf_token %}
+                        <input type="text" id="new_award" name="new_award" style="display:none"></input>
+                        <input type="submit" id="submit_new_award" style="display:none"></input>
+                    </form>
+                    
+                    <form action="/edit_awards" method="POST">
+                    {% csrf_token %}
+                        <input type="test" id="award_id" name="award_id" style="display:none"></input>
+                        <input type="text" id="edit_award" name="edit_award" style="display:none"></input>
+                        <input type="submit" id="submit_edited_award" style="display:none"></input>
+                    </form>
                 </div>
             </section>
         </div>
@@ -343,7 +382,7 @@
             function addInput(id_to_be_copied_from, id_to_be_pasted_to) {
                 var input = document.getElementById(id_to_be_pasted_to)
                 var element = document.getElementById(id_to_be_copied_from)
-                input.value = element.textContent
+                input.value = element.textContent.trim()
             }
             function clickButton(id){
                 document.getElementById(id).click();
