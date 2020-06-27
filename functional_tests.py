@@ -402,6 +402,51 @@ class AwardsPageTest(unittest.TestCase):
         self.assertEqual(award.text, 'Google digital workshop 2 Edit')
         
         
+class LanguagesPageTest(unittest.TestCase):
+
+    def setUp(self):
+       self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+       self.browser.quit()
+
+    def test_can_add_and_edit_entry(self) :
+    
+        self.browser.get('http://localhost:8000')
+        time.sleep(1)
+        
+        add_lang = self.browser.find_element_by_id('add_lang_button')
+        add_lang.click()
+        time.sleep(1)
+        
+        new_lang_input = self.browser.find_element_by_id('new_lang_input')
+        new_lang_input.click()
+        new_lang_input.clear()
+        new_lang_input.send_keys('PYTHON')
+        
+        submit = self.browser.find_element_by_id('new_lang_button')
+        submit.click()
+        time.sleep(1)
+        
+        lang = self.browser.find_element_by_id('uneditable_lang_1')
+        self.assertEqual(lang.text, 'PYTHON Edit')
+        
+        edit = self.browser.find_element_by_id('edit_lang_1')
+        edit.click()
+        time.sleep(1)
+        
+        lang_edit_input = self.browser.find_element_by_id('editable_lang_input_1')
+        lang_edit_input.click()
+        lang_edit_input.clear()
+        lang_edit_input.send_keys('HTML')
+        submit = self.browser.find_element_by_id('submit_edit_lang_1')
+        submit.click()
+        time.sleep(1)
+        
+        lang = self.browser.find_element_by_id('uneditable_lang_1')
+        self.assertEqual(lang.text, 'HTML Edit')
+        
+    
         
         
 if __name__ == '__main__':

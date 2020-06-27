@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from lists.models import CV, JOB, EDUCATION, INTERESTS, AWARDS
+from lists.models import CV, JOB, EDUCATION, INTERESTS, AWARDS, LANG, SKILLS
     
 def edit_about(request):
     if request.method == 'POST':
@@ -71,13 +71,6 @@ def edit_education(request):
         grade = request.POST.get('edit_education_grade', "")
         dates = request.POST.get('edit_education_dates', "")
 
-        print(id)
-        print(school)
-        print(qualification)
-        print(description)
-        print(grade)
-        print(dates)
-
         ed = EDUCATION.objects.get(id = id)
         ed.school = school
         ed.qualification = qualification
@@ -102,8 +95,6 @@ def edit_awards(request):
     if request.method == 'POST':
         award = request.POST.get('edit_award', "")
         id = request.POST.get('award_id', "")
-        print(award)
-        print(id)
         aw = AWARDS.objects.get(id=id)
         aw.award = award
         aw.save()
@@ -115,6 +106,24 @@ def add_awards(request):
         award = request.POST.get('new_award', "")
         award = AWARDS(award=award)
         award.save()
+    return redirect('/')
+
+def add_lang(request):
+    if request.method == 'POST':
+        lang = request.POST.get('new_lang', "")
+        lang = LANG(lang=lang)
+        lang.save()
+    return redirect('/')
+    
+def edit_lang(request):
+    if request.method == 'POST':
+        lang = request.POST.get('edited_lang', "")
+        id = request.POST.get('lang_id', "")
+        print(lang)
+        print(id)
+        edited_lang = LANG.objects.get(id=id)
+        edited_lang.lang = lang
+        edited_lang.save()
     return redirect('/')
 
 def home_page(request):
@@ -137,6 +146,8 @@ def home_page(request):
     education = EDUCATION.objects.all()
     interests = INTERESTS.objects.all()[0]
     awards = AWARDS.objects.all()
+    langs = LANG.objects.all()
+    skills = SKILLS.objects.all()
     
     return render(request, 'home.html', {
         'cv' : cv,
@@ -144,4 +155,6 @@ def home_page(request):
         'education' : education,
         'interests' : interests,
         'awards' : awards,
+        'langs' : langs,
+        'skills' : skills,
     })

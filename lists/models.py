@@ -25,6 +25,12 @@ class INTERESTS(models.Model):
 class AWARDS(models.Model):
     award = models.TextField(default='');
     
+class LANG(models.Model):
+    lang = models.TextField(default='');
+    
+class SKILLS(models.Model):
+    skill = models.TextField(default='');
+    
 #from django.db import models
 #
 #class Item(models.Model):

@@ -230,20 +230,65 @@
                 <a href="edit_skills" class="btn btn-default" name="edit_skills">Edit skills section</a>
                     <h2 class="mb-5">Skills</h2>
                     <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
+                    <ul class="fa-ul mb-0">
+                        {% for lang in langs %}
+                        <li id="uneditable_lang_{{ lang.id }}" name="uneditable_lang_{{ lang.id }}">
+                             <span class="fa-li"><i class="fas fa-check"></i></span>
+                            {{ lang.lang }}
+                            <button id="edit_lang_{{ lang.id }}" nem="edit_lang_{{ lang.id }}" onclick="
+                                hideStuff('uneditable_lang_{{ lang.id }}');
+                                showStuff('editable_lang_{{ lang.id }}');
+                                "> Edit </button>
+                        </li>
+                        
+                        <li id="editable_lang_{{ lang.id }}" name="editable_lang_{{ lang.id }}" style="display:none">
+                            <div contenteditable="true" id="editable_lang_input_{{ lang.id }}" name="editable_lang_input_{{ lang.id }}">{{ lang.lang }}</div>
+                            <button id="submit_edit_lang_{{ lang.id }}" nem="submit_edit_lang_{{ lang.id }}" onclick="
+                            showStuff('uneditable_lang_{{ lang.id }}');
+                            hideStuff('editable_lang_{{ lang.id }}');
+                            
+                            addInput('editable_lang_input_{{ lang.id }}', 'edited_lang');
+                            addInput('lang_id_{{ lang.id }}', 'lang_id');
+                            clickButton('edit_lang');
+                            "> Submit </button>
+                        
+                        </li>
+                        
+                        <li id="lang_id_{{ lang.id }}" name="lang_id_{{ lang.id }}" style="display:none">{{ lang.id }}</li>
+                        {% endfor %}
+                        
+                        <li id="new_lang_input" name="new_lang_input" contenteditable="true" style="display:none">
+                            Add language
+                        </li>
+                        
                     </ul>
+                    <button id="add_lang_button" name="add_lang_button" onclick="
+                        hideStuff('add_lang_button');
+                        showStuff('new_lang_button');
+                        showStuff('new_lang_input');
+                        "> Add language </button>
+                    <button id="new_lang_button" name="new_lang_button" onclick="
+                       hideStuff('new_lang_button');
+                       hideStuff('new_lang_input');
+                       showStuff('add_lang_button');
+                       
+                       addInput('new_lang_input', 'new_lang');
+                       clickButton('add_lang');
+                       " style="display:none"> Submit </button>
+                    
+                    <form action="/edit_lang" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="lang_id" name="lang_id" style="display:none"></input>
+                        <input type="text" id="edited_lang" name="edited_lang" style="display:none"></input>
+                        <input type="submit" value="Submit" id="edit_lang" name="edit_lang" style="display:none"></input>
+                    </form>
+                    
+                    <form action="/add_lang" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="new_lang" name="new_lang" style="display:none"></input>
+                        <input type="submit" value="Submit" id="add_lang" name="add_lang" style="display:none"></input>
+                    </form>
+                    
                     <div class="subheading mb-3">Workflow</div>
                     <ul class="fa-ul mb-0">
                         <li>
@@ -314,10 +359,6 @@
                         </li>
                         
                         <li id="editable_award_{{ award.id }}" name="editable_award_{{ award.id }}" style="display:none">
-                            <span class="fa-li">
-                                <i class="fas fa-trophy text-warning">
-                                 </i>
-                            </span>
                             <div id="editable_award_input_{{ award.id }}" name="editable_award_input_{{ award.id }}"  contenteditable="true">{{ award.award }}</div>
                             <span style="display:none" id="award_id_{{ award.id }}" name="award_id_{{ award.id }}">{{ award.id }}</span>
                             <button id="save_award_{{ award.id }}" name="save_award_{{ award.id }}" onclick="
@@ -331,10 +372,6 @@
                         </li>
                         {% endfor %}
                         <li id="new_award_input" name="new_award_input" style="display:none" contenteditable="true">
-                            <span class="fa-li">
-                                <i class="fas fa-trophy text-warning">
-                                 </i>
-                            </span>
                              Add award
                         </li>
                     </ul>
