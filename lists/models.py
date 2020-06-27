@@ -30,10 +30,3 @@ class LANG(models.Model):
     
 class SKILLS(models.Model):
     skill = models.TextField(default='');
-    
-#from django.db import models
-#
-#class Item(models.Model):
-#    text = models.TextField(default='')
-#
-## Create your models here.
