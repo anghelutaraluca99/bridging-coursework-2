@@ -291,19 +291,63 @@
                     
                     <div class="subheading mb-3">Workflow</div>
                     <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>Agile Development & Scrum
-                        </li>
-                    </ul>
+                         {% for skill in skills %}
+                       <li id="uneditable_skill_{{ skill.id }}" name="uneditable_skill_{{ skill.id }}">
+                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                           {{ skill.skill }}
+                           <button id="edit_skill_{{ skill.id }}" nem="edit_skill_{{ skill.id }}" onclick="
+                               hideStuff('uneditable_skill_{{ skill.id }}');
+                               showStuff('editable_skill_{{ skill.id }}');
+                               "> Edit </button>
+                       </li>
+                       
+                       <li id="editable_skill_{{ skill.id }}" name="editable_skill_{{ skill.id }}" style="display:none">
+                           <div contenteditable="true" id="editable_skill_input_{{ skill.id }}" name="editable_skill_input_{{ skill.id }}">{{ skill.skill }}</div>
+                           <button id="submit_edit_skill_{{ skill.id }}" name="submit_edit_skill_{{ skill.id }}" onclick="
+                           showStuff('uneditable_skill_{{ skill.id }}');
+                           hideStuff('editable_skill_{{ skill.id }}');
+                           
+                           addInput('editable_skill_input_{{ skill.id }}', 'edited_skill');
+                           addInput('skill_id_{{ skill.id }}', 'skill_id');
+                           clickButton('edit_skill');
+                           "> Submit </button>
+                       
+                       </li>
+                       
+                       <li id="skill_id_{{ skill.id }}" name="skill_id_{{ skill.id }}" style="display:none">{{ skill.id }}</li>
+                       {% endfor %}
+                       
+                       <li id="new_skill_input" name="new_skill_input" contenteditable="true" style="display:none">
+                           Add skill
+                       </li>
+                       
+                   </ul>
+                   <button id="add_skill_button" name="add_skill_button" onclick="
+                       hideStuff('add_skill_button');
+                       showStuff('new_skill_button');
+                       showStuff('new_skill_input');
+                       "> Add skill </button>
+                   <button id="new_skill_button" name="new_skill_button" onclick="
+                      hideStuff('new_skill_button');
+                      hideStuff('new_skill_input');
+                      showStuff('add_skill_button');
+                      
+                      addInput('new_skill_input', 'new_skill');
+                      clickButton('add_skill');
+                      " style="display:none"> Submit </button>
+                   
+                   <form action="/edit_skill" method="POST">
+                       {% csrf_token %}
+                       <input type="text" id="skill_id" name="skill_id" style="display:none"></input>
+                       <input type="text" id="edited_skill" name="edited_skill" style="display:none"></input>
+                       <input type="submit" value="Submit" id="edit_skill" name="edit_skill" style="display:none"></input>
+                   </form>
+                   
+                   <form action="/add_skill" method="POST">
+                       {% csrf_token %}
+                       <input type="text" id="new_skill" name="new_skill" style="display:none"></input>
+                       <input type="submit" value="Submit" id="add_skill" name="add_skill" style="display:none"></input>
+                   </form>
                 </div>
             </section>
             <hr class="m-0" />

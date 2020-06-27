@@ -446,7 +446,49 @@ class LanguagesPageTest(unittest.TestCase):
         lang = self.browser.find_element_by_id('uneditable_lang_1')
         self.assertEqual(lang.text, 'HTML Edit')
         
+class SkillsPageTest(unittest.TestCase):
+
+    def setUp(self):
+       self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+       self.browser.quit()
+
+    def test_can_add_and_edit_entry(self) :
     
+        self.browser.get('http://localhost:8000')
+        time.sleep(1)
+        
+        add_skill = self.browser.find_element_by_id('add_skill_button')
+        add_skill.click()
+        time.sleep(1)
+        
+        new_skill_input = self.browser.find_element_by_id('new_skill_input')
+        new_skill_input.click()
+        new_skill_input.clear()
+        new_skill_input.send_keys('PRESENTATION')
+        
+        submit = self.browser.find_element_by_id('new_skill_button')
+        submit.click()
+        time.sleep(1)
+        
+        skill = self.browser.find_element_by_id('uneditable_skill_1')
+        self.assertEqual(skill.text, 'PRESENTATION Edit')
+        
+        edit = self.browser.find_element_by_id('edit_skill_1')
+        edit.click()
+        time.sleep(1)
+        
+        skill_edit_input = self.browser.find_element_by_id('editable_skill_input_1')
+        skill_edit_input.click()
+        skill_edit_input.clear()
+        skill_edit_input.send_keys('COMMUNICATION')
+        submit = self.browser.find_element_by_id('submit_edit_skill_1')
+        submit.click()
+        time.sleep(1)
+        
+        skill = self.browser.find_element_by_id('uneditable_skill_1')
+        self.assertEqual(skill.text, 'COMMUNICATION Edit')
         
         
 if __name__ == '__main__':

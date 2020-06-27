@@ -14,6 +14,9 @@ urlpatterns = [
     url('add_awards', views.add_awards, name='add_awards'),
     url('add_lang', views.add_lang, name='add_lang'),
     url('edit_lang', views.edit_lang, name='edit_lang'),
+    url('add_skill', views.add_skill, name='add_skill'),
+    url('edit_skill', views.edit_skill, name='edit_skill'),
+    
     
     
 ]

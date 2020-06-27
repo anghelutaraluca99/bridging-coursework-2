@@ -125,6 +125,24 @@ def edit_lang(request):
         edited_lang.lang = lang
         edited_lang.save()
     return redirect('/')
+    
+def add_skill(request):
+    if request.method == 'POST':
+        skill = request.POST.get('new_skill', "")
+        skill = SKILLS(skill=skill)
+        skill.save()
+    return redirect('/')
+    
+def edit_skill(request):
+    if request.method == 'POST':
+        skill = request.POST.get('edited_skill', "")
+        id = request.POST.get('skill_id', "")
+        print(skill)
+        print(id)
+        edited_skill = SKILLS.objects.get(id=id)
+        edited_skill.skill = skill
+        edited_skill.save()
+    return redirect('/')
 
 def home_page(request):
     
