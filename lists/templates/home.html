@@ -51,7 +51,7 @@
                         <input type="text" name="address_input" id="address_input" hidden></input>
                         <input type="text" name="email_input" id="email_input" hidden></input>
                         <input type="text" name="about_description_input" id="about_description_input" hidden></input>
-                        <input type="submit" value="Submit" onclick="showStuff('uneditable_about');hideStuff('editable_about');addInput('name_surname', 'name_surname_input');addInput('address', 'address_input');addInput('about_description', 'about_description_input');addInput('email', 'email_input')" id="submit_about"></input>
+                        <input class="btn" type="submit" value="Submit" onclick="showStuff('uneditable_about');hideStuff('editable_about');addInput('name_surname', 'name_surname_input');addInput('address', 'address_input');addInput('about_description', 'about_description_input');addInput('email', 'email_input')" id="submit_about"><i class="fa fa-check"></i></input>
                     </form>
                 </div>
                 <div class="resume-section-content" id="uneditable_about">
@@ -62,7 +62,7 @@
                     <div class="social-icons">
                         <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a><a class="social-icon" href="#"><i class="fab fa-github"></i></a><a class="social-icon" href="#"><i class="fab fa-twitter"></i></a><a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                     </div>
-                    <button onclick="hideStuff('uneditable_about');showStuff('editable_about')" id="edit_about">Edit section</button>
+                    <button class="btn" onclick="hideStuff('uneditable_about');showStuff('editable_about')" id="edit_about"><i class="fa fa-edit"></i> Edit </button>
                 </div>
             </section>
             
@@ -93,7 +93,7 @@
                                 <p style="display:none" id="job_id_{{ job.id }}" name="job_id_{{ job.id }}">{{ job.id }}</p>
                             </div>
                             
-                            <button id="edit_experience_{{ job.id }}" onclick="
+                            <button class="btn" id="edit_experience_{{ job.id }}" onclick="
                                 hideStuff('uneditable_job_title_{{ job.id }}');
                                 hideStuff('uneditable_job_company_{{ job.id }}');
                                 hideStuff('uneditable_job_description_{{ job.id }}');
@@ -104,9 +104,9 @@
                                 showStuff('editable_job_company_{{ job.id }}');
                                 showStuff('editable_job_description_{{ job.id }}');
                                 showStuff('editable_job_dates_{{ job.id }}');
-                                showStuff('submit_experience_{{ job.id }}')"> Edit job </button>
+                                showStuff('submit_experience_{{ job.id }}')"><i class="fa fa-edit"></i> Edit </button>
                             
-                            <button style="display:none" id="submit_experience_{{ job.id }}" onclick="
+                            <button class="btn" style="display:none" id="submit_experience_{{ job.id }}" onclick="
                                 hideStuff('editable_job_title_{{ job.id }}');
                                 hideStuff('editable_job_company_{{ job.id }}');
                                 hideStuff('editable_job_description_{{ job.id }}');
@@ -127,7 +127,7 @@
                                 
                                 clickButton('submit_edited_job');
                                 "
-                            > Submit </button>
+                            ><i class="fa fa-check"></i> Submit </button>
                             {% endfor %}
                     </div>
                     <form action="/edit_experience" method="POST">
@@ -139,7 +139,7 @@
                         <input type="text" id="edit_job_dates" name="edit_job_dates" style="display:none"></input>
                         <input type="submit" value="Submit" id="submit_edited_job" name="submit_edited_job" style="display:none"></input>
                     </form>
-                    <button id="add_experience" onclick="addJob(); hideStuff('add_experience')">Add job </button>
+                    <button class="btn" id="add_experience" onclick="addJob(); hideStuff('add_experience')"><i class="fa fa-plus"></i>Add job </button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -169,7 +169,7 @@
                         <p name="ed_id{{ ed.id }}" id="ed_id{{ ed.id }}" style="display:none">{{ ed.id }}</p>
                     </div>
                     
-                    <button id="edit_education_{{ ed.id }}" onclick="
+                    <button class="btn" id="edit_education_{{ ed.id }}" onclick="
                         hideStuff('uneditable_school_{{ ed.id }}');
                         hideStuff('uneditable_qualification_{{ ed.id }}');
                         hideStuff('uneditable_education_description_{{ ed.id }}');
@@ -182,9 +182,9 @@
                         showStuff('editable_education_description_{{ ed.id }}');
                         showStuff('editable_education_grade_{{ ed.id }}');
                         showStuff('editable_education_dates_{{ ed.id }}');
-                        showStuff('submit_education_{{ ed.id }}')"> Edit  </button>
+                        showStuff('submit_education_{{ ed.id }}')"><i class="fa fa-edit"></i> Edit  </button>
                     
-                    <button style="display:none" id="submit_education_{{ ed.id }}" onclick="
+                    <button class="btn" style="display:none" id="submit_education_{{ ed.id }}" onclick="
                         hideStuff('editable_school_{{ ed.id }}');
                         hideStuff('editable_qualification_{{ ed.id }}');
                         hideStuff('editable_education_description_{{ ed.id }}');
@@ -207,7 +207,7 @@
                         addInput('ed_id{{ ed.id }}', 'ed_id');
                         
                         clickButton('submit_edited_education');"
-                    > Submit </button>
+                    ><i class="fa fa-check"></i> Submit </button>
                     
                     {% endfor %}
                     <form action="/edit_education" method="POST">
@@ -220,7 +220,7 @@
                         <input type="text" id="edit_education_dates" name="edit_education_dates" style="display:none"></input>
                         <input type="submit" value="Submit" id="submit_edited_education" name="submit_edited_education" style="display:none"></input>
                     </form>
-                    <button onclick="addEducation()" id="add_education" name="add_education">Add education</button>
+                    <button class="btn" onclick="addEducation()" id="add_education" name="add_education"><i class="fa fa-plus"></i> Add education </button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -235,22 +235,22 @@
                         <li id="uneditable_lang_{{ lang.id }}" name="uneditable_lang_{{ lang.id }}">
                              <span class="fa-li"><i class="fas fa-check"></i></span>
                             {{ lang.lang }}
-                            <button id="edit_lang_{{ lang.id }}" nem="edit_lang_{{ lang.id }}" onclick="
+                            <button class="btn" id="edit_lang_{{ lang.id }}" nem="edit_lang_{{ lang.id }}" onclick="
                                 hideStuff('uneditable_lang_{{ lang.id }}');
                                 showStuff('editable_lang_{{ lang.id }}');
-                                "> Edit </button>
+                                "><i class="fa fa-edit"></i></button>
                         </li>
                         
                         <li id="editable_lang_{{ lang.id }}" name="editable_lang_{{ lang.id }}" style="display:none">
                             <div contenteditable="true" id="editable_lang_input_{{ lang.id }}" name="editable_lang_input_{{ lang.id }}">{{ lang.lang }}</div>
-                            <button id="submit_edit_lang_{{ lang.id }}" name="submit_edit_lang_{{ lang.id }}" onclick="
+                            <button class="btn" id="submit_edit_lang_{{ lang.id }}" name="submit_edit_lang_{{ lang.id }}" onclick="
                             showStuff('uneditable_lang_{{ lang.id }}');
                             hideStuff('editable_lang_{{ lang.id }}');
                             
                             addInput('editable_lang_input_{{ lang.id }}', 'edited_lang');
                             addInput('lang_id_{{ lang.id }}', 'lang_id');
                             clickButton('edit_lang');
-                            "> Submit </button>
+                            "><i class="fa fa-check"></i> Submit </button>
                         
                         </li>
                         
@@ -262,19 +262,19 @@
                         </li>
                         
                     </ul>
-                    <button id="add_lang_button" name="add_lang_button" onclick="
+                    <button class="btn" id="add_lang_button" name="add_lang_button" onclick="
                         hideStuff('add_lang_button');
                         showStuff('new_lang_button');
                         showStuff('new_lang_input');
-                        "> Add language </button>
-                    <button id="new_lang_button" name="new_lang_button" onclick="
+                        "><i class="fa fa-plus"></i> Add language </button>
+                    <button class="btn" id="new_lang_button" name="new_lang_button" onclick="
                        hideStuff('new_lang_button');
                        hideStuff('new_lang_input');
                        showStuff('add_lang_button');
                        
                        addInput('new_lang_input', 'new_lang');
                        clickButton('add_lang');
-                       " style="display:none"> Submit </button>
+                       " style="display:none"><i class="fa fa-check"></i> Submit </button>
                     
                     <form action="/edit_lang" method="POST">
                         {% csrf_token %}
@@ -295,22 +295,22 @@
                        <li id="uneditable_skill_{{ skill.id }}" name="uneditable_skill_{{ skill.id }}">
                             <span class="fa-li"><i class="fas fa-check"></i></span>
                            {{ skill.skill }}
-                           <button id="edit_skill_{{ skill.id }}" nem="edit_skill_{{ skill.id }}" onclick="
+                           <button class="btn" id="edit_skill_{{ skill.id }}" nem="edit_skill_{{ skill.id }}" onclick="
                                hideStuff('uneditable_skill_{{ skill.id }}');
                                showStuff('editable_skill_{{ skill.id }}');
-                               "> Edit </button>
+                               "><i class="fa fa-edit"></i></button>
                        </li>
                        
                        <li id="editable_skill_{{ skill.id }}" name="editable_skill_{{ skill.id }}" style="display:none">
                            <div contenteditable="true" id="editable_skill_input_{{ skill.id }}" name="editable_skill_input_{{ skill.id }}">{{ skill.skill }}</div>
-                           <button id="submit_edit_skill_{{ skill.id }}" name="submit_edit_skill_{{ skill.id }}" onclick="
+                           <button class="btn" id="submit_edit_skill_{{ skill.id }}" name="submit_edit_skill_{{ skill.id }}" onclick="
                            showStuff('uneditable_skill_{{ skill.id }}');
                            hideStuff('editable_skill_{{ skill.id }}');
                            
                            addInput('editable_skill_input_{{ skill.id }}', 'edited_skill');
                            addInput('skill_id_{{ skill.id }}', 'skill_id');
                            clickButton('edit_skill');
-                           "> Submit </button>
+                           "><i class="fa fa-check"></i> Submit </button>
                        
                        </li>
                        
@@ -322,19 +322,19 @@
                        </li>
                        
                    </ul>
-                   <button id="add_skill_button" name="add_skill_button" onclick="
+                   <button class="btn" id="add_skill_button" name="add_skill_button" onclick="
                        hideStuff('add_skill_button');
                        showStuff('new_skill_button');
                        showStuff('new_skill_input');
-                       "> Add skill </button>
-                   <button id="new_skill_button" name="new_skill_button" onclick="
+                       "><i class="fa fa-plus"></i> Add skill </button>
+                   <button class="btn" id="new_skill_button" name="new_skill_button" onclick="
                       hideStuff('new_skill_button');
                       hideStuff('new_skill_input');
                       showStuff('add_skill_button');
                       
                       addInput('new_skill_input', 'new_skill');
                       clickButton('add_skill');
-                      " style="display:none"> Submit </button>
+                      " style="display:none"><i class="fa fa-check"></i> Submit </button>
                    
                    <form action="/edit_skill" method="POST">
                        {% csrf_token %}
@@ -364,14 +364,14 @@
                         <input type="submit" value="Submit" id="submit_interests" name="submit_interests" style="display:none"></input>
                     </form>
                     
-                    <button id="edit_interests_button" onclick="
+                    <button class="btn" id="edit_interests_button" onclick="
                         hideStuff('uneditable_interests');
                         hideStuff('edit_interests_button');
                         showStuff('editable_interests');
                         showStuff('save_interests');
                         "
-                        > Edit </button>
-                    <button id="save_interests" onclick="
+                        ><i class="fa fa-edit"></i> Edit </button>
+                    <button class="btn" id="save_interests" onclick="
                         hideStuff('editable_interests');
                         hideStuff('save_interests');
                         showStuff('uneditable_interests');
@@ -380,7 +380,7 @@
                         addInput('editable_interests', 'edit_interests');
                         clickButton('submit_interests');
                         " style="display:none"
-                        > Submit </button>
+                        ><i class="fa fa-check"></i> Submit </button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -396,41 +396,41 @@
                                  </i>
                             </span>
                             {{ award.award }}
-                            <button id="edit_award_{{ award.id }}" name="edit_award_{{ award.id }}" onclick="
+                            <button class="btn" id="edit_award_{{ award.id }}" name="edit_award_{{ award.id }}" onclick="
                                 hideStuff('uneditable_award_{{ award.id }}');
                                 showStuff('editable_award_{{ award.id }}');
-                                "> Edit </button>
+                                "><i class="fa fa-edit"></i></button>
                         </li>
                         
                         <li id="editable_award_{{ award.id }}" name="editable_award_{{ award.id }}" style="display:none">
                             <div id="editable_award_input_{{ award.id }}" name="editable_award_input_{{ award.id }}"  contenteditable="true">{{ award.award }}</div>
                             <span style="display:none" id="award_id_{{ award.id }}" name="award_id_{{ award.id }}">{{ award.id }}</span>
-                            <button id="save_award_{{ award.id }}" name="save_award_{{ award.id }}" onclick="
+                            <button class="btn" id="save_award_{{ award.id }}" name="save_award_{{ award.id }}" onclick="
                                 showStuff('uneditable_award_{{ award.id }}');
                                 hideStuff('editable_award_{{ award.id }}');
                                 
                                 addInput('editable_award_input_{{ award.id }}', 'edit_award');
                                 addInput('award_id_{{ award.id }}', 'award_id');
                                 clickButton('submit_edited_award');
-                                "> Submit </button>
+                                "><i class="fa fa-check"></i> Submit </button>
                         </li>
                         {% endfor %}
                         <li id="new_award_input" name="new_award_input" style="display:none" contenteditable="true">
                              Add award
                         </li>
                     </ul>
-                    <button id="add_award" onclick="
+                    <button class="btn" id="add_award" onclick="
                         hideStuff('add_award');
                         showStuff('new_award_input');
                         showStuff('submit_award');
-                        "> Add award </button>
-                    <button id="submit_award" style="display:none" onclick="
+                        "><i class="fa fa-plus"></i> Add award </button>
+                    <button class="btn" id="submit_award" style="display:none" onclick="
                         showStuff('add_award');
                         hideStuff('new_award_input');
                         hideStuff('submit_award');
                         addInput('new_award_input', 'new_award');
                         clickButton('submit_new_award');
-                        "> Submit </button>
+                        "><i class="fa fa-check"></i> Submit </button>
                     <form action="/add_awards" method="POST">
                     {% csrf_token %}
                         <input type="text" id="new_award" name="new_award" style="display:none"></input>
@@ -487,7 +487,7 @@
                 <input type="text" hidden id="new_job_description" name="new_job_description"></input>
                 <input type="text" hidden id="new_job_dates" name="new_job_dates"></input>
                 
-                <input type="submit" onclick="addInput('editable_job_title', 'new_job_title'); addInput('editable_job_company', 'new_job_company'); addInput('editable_job_description', 'new_job_description'); addInput('editable_job_dates', 'new_job_dates')" value="Submit" id="submit_new_job">
+                <input class="btn" type="submit" onclick="addInput('editable_job_title', 'new_job_title'); addInput('editable_job_company', 'new_job_company'); addInput('editable_job_description', 'new_job_description'); addInput('editable_job_dates', 'new_job_dates')" value="Submit" id="submit_new_job"><i class="fa fa-check"></i></input>
 
                 </form>`;
                 var div = document.getElementById("jobs");
@@ -513,7 +513,7 @@
                     <input type="text" hidden id="new_grade" name="new_grade"></input>
                     <input type="text" hidden id="new_education_dates" name="new_education_dates"></input>
                     
-                    <input type="submit" onclick="addInput('editable_school', 'new_school'); addInput('editable_qualification', 'new_qualification'); addInput('editable_education_description', 'new_education_description'); addInput('editable_education_grade', 'new_grade'); addInput('editable_education_dates', 'new_education_dates')" value="Submit" id="submit_new_education">
+                    <input class="btn" type="submit" onclick="addInput('editable_school', 'new_school'); addInput('editable_qualification', 'new_qualification'); addInput('editable_education_description', 'new_education_description'); addInput('editable_education_grade', 'new_grade'); addInput('editable_education_dates', 'new_education_dates')" value="Submit" id="submit_new_education"><i class="fa fa-check"></i></input>
                 </form>
                 `
                 var div = document.getElementById("education_div");
